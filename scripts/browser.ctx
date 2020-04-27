@@ -1,0 +1,38 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: browser
+Element-Type: context
+Element-Version: 2.0
+Id: _JuiLgHyfEeqCLMRB57s1HQ
+Save-Time: 4/27/20 11:10 AM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+/*
+Checks if a given text and link exist in the current browser.
+*/
+proc linkExists [val href] [val text] {
+	let [val script [concat
+		"var elements = document.querySelectorAll(\"a[href='" $href "']\");"
+		"for (var i = 0; i < elements.length; i++) {"
+		"	if (elements[i].innerHTML != '" $text "') {"
+		"		return false;"
+		"	}"
+		"}"
+		"return true;"
+		]] {
+		
+		get-control Browser | get-object | invoke evaluate $script
+	}
+}
+
+/*
+Reproduces a click on an html element identified by a given id.
+*/
+proc clickOnLink [val id] {
+	get-control Browser | get-object | invoke evaluate [concat "document.getElementById('" $id "').click()"]
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

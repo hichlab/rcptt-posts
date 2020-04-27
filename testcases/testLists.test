@@ -1,0 +1,31 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: testLists
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _kKuokHfgEeqCK8RB57s1HQ
+Save-Time: 4/27/20 11:29 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+global [val items [list a b c a d e a a]]
+
+$items | countOccurrences a | log
+$items | countOccurrences p | log
+
+measure-time -label for -do {
+	$items | itemExists a | log
+	$items | itemExists p | log
+	list | itemExists a | log
+} | log
+
+measure-time -label loop -do {
+	$items | itemExists2 a | log
+	$items | itemExists2 p | log
+	list | itemExists2 a | log
+} | log
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

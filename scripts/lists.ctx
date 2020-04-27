@@ -1,0 +1,52 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: lists
+Element-Type: context
+Element-Version: 2.0
+Id: _RPne4HffEeqCK8RB57s1HQ
+Save-Time: 4/27/20 11:19 AM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+/*
+Counts how many times an item appears in a given list. 
+*/
+proc countOccurrences [val items -input] [val targetItem] {
+	$items | each [val it] {
+		if [$it | eq $targetItem] {
+			bool true
+		}
+	} | length
+}
+
+/*
+Checks if an item exists in a given list using "each" command.
+*/
+proc itemExists [val items -input] [val targetItem] {
+	$items | each [val it] {
+		if [$it | eq $targetItem] {
+			bool true
+		}
+	} | length | gt 0
+}
+
+/*
+Checks if an item exists in a given list using "loop" command.
+*/
+proc itemExists2 [val items -input] [val targetItem] {
+	loop [val index 0] [val max [$items | invoke elements | invoke size]] {
+		if [$index | lt $max] {
+			if [$items | get $index | not-eq $targetItem] {
+				recur [$index | plus 1][$max]
+			} -else {
+				bool true
+			}
+		} -else {
+			bool false
+		}
+	} | equals true
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

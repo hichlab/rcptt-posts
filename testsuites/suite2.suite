@@ -1,0 +1,15 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: suite2
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _Nuq1UISQEeqcH9s7AjTDXw
+Save-Time: 4/22/20 1:57 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_kKuokHfgEeqCK8RB57s1HQ	// kind: 'test' name: 'test1' path: '../testcases/test1.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

@@ -1,0 +1,36 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: exec-process
+Element-Type: context
+Element-Version: 2.0
+Id: _XpyiYHsTEeqCLMRB57s1HQ
+Save-Time: 4/27/20 11:29 AM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+/*
+Checks if a Windows process with a given name is currently running.
+*/
+proc processExists [val name] {
+	exec-process cmd "/c" tasklist "/FI" [concat "IMAGENAME eq " $name] | get stdout | invoke contains $name
+}
+
+/*
+Unzip a compressed file into a given directory using 7zip utility.
+*/
+proc unzip [val zipFile] [val targetDirectory] {
+	let [val unzipCmd [concat "\"C:\\Program Files\\7-Zip\\7z\"" " x " $zipFile " -aoa -o" $targetDirectory]] {
+		exec-process cmd "/c" $unzipCmd
+	}
+}
+
+/*
+Creates a folder ignoring any error that might ocurrs during the execution of "md" command.
+*/
+proc createFolder [val path] {
+	exec-process cmd "/c" md $path -ignoreExitCode -ignoreStderr
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

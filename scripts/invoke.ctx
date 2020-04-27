@@ -1,0 +1,61 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: invoke
+Element-Type: context
+Element-Version: 2.0
+Id: _qtE9QHo7EeqCLMRB57s1HQ
+Save-Time: 4/27/20 11:20 AM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+/*
+Returns a java.io.File object from the specified uri.
+*/
+proc uriToFile [val uri] {
+	invoke-static -pluginId "org.eclipse.rcptt.ecl.filesystem" -className "org.eclipse.rcptt.ecl.filesystem.FileResolver" -methodName resolve -args $uri
+		| invoke toFile
+}
+
+/*
+Returns an array of bytes of the file with the specified uri.
+*/
+proc uriToBytes [val uri] {
+	invoke-static -pluginId "org.apache.commons.io" -className "org.apache.commons.io.FileUtils" 
+		-methodName readFileToByteArray -args [uriToFile $uri]
+}
+
+/*
+Returns true if the specified value is numeric.
+*/
+proc isNumeric [val value] {
+	invoke-static -pluginId "org.apache.commons.lang3" -className "org.apache.commons.lang3.StringUtils" 
+		-methodName isNumeric -args [str $value]
+}
+
+/*
+Reverses a string.
+*/
+proc reverse [val string] {
+	invoke-static -pluginId "org.apache.commons.lang3" -className "org.apache.commons.lang3.StringUtils" 
+		-methodName reverse -args $string
+}
+
+/*
+Returns the user directory path.
+*/
+proc getUserDirectory {
+	invoke-static -pluginId "org.apache.commons.io" -className "org.apache.commons.io.FileUtils" 
+		-methodName getUserDirectoryPath | log
+}
+
+/*
+Returns the value of the environment variable JAVA_HOME.
+*/
+proc getJavaHome {
+	invoke-static -pluginId "org.eclipse.rcptt.ecl.core" -className "java.lang.System" 
+		-methodName getenv -args "JAVA_HOME"
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--
