@@ -1,0 +1,53 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: problems
+Element-Type: context
+Element-Version: 2.0
+Id: _ZtfsgIkqEeqopcq4h_Q64Q
+Save-Time: 4/28/20 1:12 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+/* Checks whether the Problems view contains a message with a given severity. */
+proc problemExists [val message] [val severity Error] {
+	with [get-view Problems | get-tree] {
+		if [itemExists [concat $severity "s \\(.*item(s?)\\)/" $message]] {
+			bool true
+		}
+	} | length | gt 0
+}
+
+/* 
+Counts how many times a message with a given severity appears in the Problems view.
+If no message is specified then it counts all messages with the specified severity. 
+*/
+proc problemCount [val severity] [val message ""] {
+	let [val severityNode [concat $severity "s \\(.*item(s?)\\)"]] {
+		with [get-view Problems | get-tree] {
+			if [itemExists $severityNode] {
+				with [get-item $severityNode] {
+					expand
+					if [$message | eq ""] {
+						// count all messages of the specified severity
+						get-items | length
+					} -else {
+						// count only the specified message
+						get-items | foreach [val item] {
+							if [$item | get-property text -raw | eq $message] {
+								// message found
+								emit true
+							}
+						} | length
+					}
+				}
+			} -else {
+				// no item is found for the specified severity
+				int 0
+			}
+		}
+	}
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

@@ -1,0 +1,30 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _ruJmgHl8EeqCLMRB57s1HQ,_ZtfsgIkqEeqopcq4h_Q64Q
+Element-Name: testProblems
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _DO3b8IktEeqopcq4h_Q64Q
+Save-Time: 4/28/20 1:10 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+// check an error message
+problemExists -message "The local variable company may not have been initialized" | verify-true
+
+// error message not expected
+problemExists -message "The value of the field Company.name is not used" | verify-false
+
+// check a warning message
+problemExists -message "The value of the field Company.name is not used" -severity Warning | verify-true
+
+problemCount Error | eq 1 | verify-true
+
+problemCount Warning | eq 2 | verify-true
+
+problemCount Warning "The value of the field Company.name is not used" | eq 1 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
